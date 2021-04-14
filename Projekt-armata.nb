@@ -1,0 +1,396 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17188,        388]
+NotebookOptionsPosition[     16839,        371]
+NotebookOutlinePosition[     17213,        387]
+CellTagsIndexPosition[     17170,        384]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "xx", ",", "yy", ",", "tol", ",", "dof", ",", "xxmax", ",", "yymax"}], 
+      "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"tol", "=", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{"Quiet", "@", 
+         RowBox[{"NDSolve", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"xx", "''"}], "[", "t", "]"}], "\[Equal]", 
+              RowBox[{
+               RowBox[{"-", 
+                RowBox[{"(", 
+                 RowBox[{"Airresistance", " ", 
+                  RowBox[{
+                   RowBox[{"xx", "'"}], "[", "t", "]"}]}], ")"}]}], "/", 
+               "mas"}]}], ",", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"xx", "'"}], "[", "0", "]"}], "\[Equal]", 
+              RowBox[{"speed", " ", 
+               RowBox[{"Cos", "[", "Initialangle", "]"}]}]}], ",", 
+             RowBox[{
+              RowBox[{"xx", "[", "0", "]"}], "\[Equal]", "0"}], ",", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"yy", "''"}], "[", "t", "]"}], "\[Equal]", 
+              RowBox[{
+               RowBox[{"-", "9.8"}], "-", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"Airresistance", "  ", 
+                  RowBox[{
+                   RowBox[{"yy", "'"}], "[", "t", "]"}]}], ")"}], "/", 
+                "mas"}]}]}], ",", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"yy", "'"}], "[", "0", "]"}], "\[Equal]", 
+              RowBox[{"speed", " ", 
+               RowBox[{"Sin", "[", "Initialangle", "]"}]}]}], ",", 
+             RowBox[{
+              RowBox[{"yy", "[", "0", "]"}], "\[Equal]", "0"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"xx", ",", "yy"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "0", ",", "Infinity"}], "}"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"Method", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"\"\<EventLocator\>\"", ",", "\[IndentingNewLine]", 
+              RowBox[{"\"\<Event\>\"", "\[Rule]", 
+               RowBox[{"yy", "[", "t", "]"}]}], ",", "\[IndentingNewLine]", 
+              RowBox[{"\"\<EventAction\>\"", "\[RuleDelayed]", 
+               RowBox[{"Throw", "[", 
+                RowBox[{
+                 RowBox[{"ww", "=", "t"}], ",", "\"\<StopIntegration\>\""}], 
+                "]"}]}], ",", 
+              RowBox[{"\"\<Direction\>\"", "\[Rule]", 
+               RowBox[{"-", "1"}]}]}], "}"}]}], ",", 
+           RowBox[{"MaxSteps", "\[Rule]", "Infinity"}]}], "]"}]}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"yymax", "=", 
+       RowBox[{"First", "@", 
+        RowBox[{"Quiet", "@", 
+         RowBox[{"FindMaximum", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"yy", "[", "t", "]"}], "/.", "tol"}], ",", 
+             RowBox[{"0", "\[LessEqual]", "t", "\[LessEqual]", "ww"}]}], 
+            "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "ww"}], "}"}]}], "]"}]}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"xxmax", "=", 
+       RowBox[{
+        RowBox[{"xx", "[", "ww", "]"}], "/.", "tol"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"ParametricPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"xx", "[", "t", "]"}], ",", 
+              RowBox[{"yy", "[", "t", "]"}]}], "}"}], "/.", "tol"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "0", ",", 
+             RowBox[{"Min", "[", 
+              RowBox[{"ww", ",", "end"}], "]"}]}], "}"}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{
+             RowBox[{"Max", "[", 
+              RowBox[{
+               RowBox[{"2.5", "xxmax"}], ",", 
+               RowBox[{"1.1", "yymax"}]}], "]"}], 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "1"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}]}], ",", 
+           RowBox[{"AxesLabel", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"\"\<distance\>\"", ",", "\"\<height\>\""}], "}"}]}]}], 
+          "]"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Green", ",", 
+            RowBox[{"PointSize", "[", ".05", "]"}], ",", 
+            RowBox[{"Point", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"xx", "[", 
+                 RowBox[{"Min", "[", 
+                  RowBox[{"ww", ",", "end"}], "]"}], "]"}], ",", 
+                RowBox[{"yy", "[", 
+                 RowBox[{"Min", "[", 
+                  RowBox[{"ww", ",", "end"}], "]"}], "]"}]}], "}"}], "/.", 
+              "tol"}], "]"}]}], "}"}], "]"}]}], "\[IndentingNewLine]", "}"}], 
+       "]"}]}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}], ",", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"speed", ",", "76", ",", "\"\<\nInitial speed (m/s)\>\""}], 
+      "}"}], ",", "5", ",", "100", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Airresistance", ",", ".45", ",", "\"\<Airresistance\>\""}], 
+      "}"}], ",", "0.3", ",", "0.9", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"Initialangle", ",", 
+       RowBox[{"45", "\[Degree]"}], ",", 
+       "\"\<\nInitial angle (degrees)\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"15", "\[Degree]"}], ",", 
+       RowBox[{"20", "\[Degree]"}], ",", 
+       RowBox[{"45", "\[Degree]"}], ",", 
+       RowBox[{"65", "\[Degree]"}], ",", 
+       RowBox[{"75", "\[Degree]"}], ",", 
+       RowBox[{"89", "\[Degree]"}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "RadioButton"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"mas", ",", ".5", ",", "\"\<Weight (kg)\>\""}], "}"}], ",", 
+     "0.5", ",", "72", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"end", ",", ".001", ",", "\"\<Shot!\>\""}], "}"}], ",", 
+     "0.000001", ",", 
+     RowBox[{"Dynamic", "[", "ww", "]"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "Trigger"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"ww", ",", "0", ",", 
+     RowBox[{"ControlType", "\[Rule]", " ", "None"}]}], "}"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.7673649870104322`*^9, 3.7673650142677402`*^9}, {
+   3.7673650768825645`*^9, 3.7673651130830374`*^9}, {3.7673655617612777`*^9, 
+   3.7673656091264315`*^9}, {3.767414471947097*^9, 3.767414520209094*^9}, {
+   3.7674152561616397`*^9, 3.7674152654678783`*^9}, {3.7674153044021835`*^9, 
+   3.767415404552569*^9}, {3.767415470731604*^9, 3.7674155048527045`*^9}, {
+   3.767415610828107*^9, 3.767415645451746*^9}, {3.767415685988346*^9, 
+   3.7674156970424128`*^9}, {3.7674157494637475`*^9, 
+   3.7674158109563866`*^9}, {3.767415891364833*^9, 3.7674161159358826`*^9}, {
+   3.767416221125062*^9, 3.7674162246747885`*^9}, 3.767416287961112*^9, {
+   3.767416376755972*^9, 3.767416384640286*^9}, {3.76741641742566*^9, 
+   3.767416420151229*^9}, {3.767416702910079*^9, 3.7674167032924967`*^9}, {
+   3.767416746302662*^9, 3.767416798150957*^9}, {3.767506578155895*^9, 
+   3.7675066178186283`*^9}, {3.7675066889858947`*^9, 
+   3.7675067070769167`*^9}, {3.7675069048357944`*^9, 3.767506929096716*^9}, {
+   3.7675070731139536`*^9, 3.7675071467015247`*^9}, {3.767507195561073*^9, 
+   3.7675072127450504`*^9}, {3.767507400561884*^9, 3.7675074828387704`*^9}, {
+   3.7675075311107492`*^9, 3.7675075409788046`*^9}, {3.7675077777023597`*^9, 
+   3.767507777838148*^9}, {3.767507816934388*^9, 3.7675078403119326`*^9}, {
+   3.767507943520748*^9, 3.7675079713929596`*^9}, {3.7675080205493126`*^9, 
+   3.7675080318666196`*^9}, {3.767508090152972*^9, 3.76750809839966*^9}, {
+   3.7675081294583874`*^9, 3.7675081350252514`*^9}, {3.7675081888210435`*^9, 
+   3.7675081996829276`*^9}, {3.767508237437557*^9, 3.767508249084756*^9}, {
+   3.7675089714227853`*^9, 3.7675089766435504`*^9}, {3.7685359393708434`*^9, 
+   3.7685360288869724`*^9}, {3.7685368829712906`*^9, 3.7685369525382414`*^9}},
+ ExpressionUUID -> "f6db98af-f3e4-4890-9074-3003282e7f7d"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`Airresistance$$ = 0.45, $CellContext`end$$ =
+     0.001, $CellContext`Initialangle$$ = 45 Degree, $CellContext`mas$$ = 
+    0.5, $CellContext`speed$$ = 76, $CellContext`ww$$ = 6.5770768299059865`, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`speed$$], 76, "\nInitial speed (m/s)"}, 5, 100}, {{
+       Hold[$CellContext`Airresistance$$], 0.45, "Airresistance"}, 0.3, 
+      0.9}, {{
+       Hold[$CellContext`Initialangle$$], 45 Degree, 
+       "\nInitial angle (degrees)"}, {
+      15 Degree, 20 Degree, 45 Degree, 65 Degree, 75 Degree, 89 Degree}}, {{
+       Hold[$CellContext`mas$$], 0.5, "Weight (kg)"}, 0.5, 72}, {{
+       Hold[$CellContext`end$$], 0.001, "Shot!"}, 1.*^-6, 
+      Dynamic[$CellContext`ww$$]}, {
+      Hold[$CellContext`ww$$], 0}}, Typeset`size$$ = {396., {181., 186.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`speed$32589$$ = 0, $CellContext`Airresistance$32590$$ =
+     0, $CellContext`Initialangle$32591$$ = 0, $CellContext`mas$32592$$ = 
+    0, $CellContext`end$32593$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`Airresistance$$ = 0.45, $CellContext`end$$ = 
+        0.001, $CellContext`Initialangle$$ = 45 Degree, $CellContext`mas$$ = 
+        0.5, $CellContext`speed$$ = 76, $CellContext`ww$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`speed$$, $CellContext`speed$32589$$, 0], 
+        Hold[$CellContext`Airresistance$$, $CellContext`Airresistance$32590$$,
+          0], 
+        Hold[$CellContext`Initialangle$$, $CellContext`Initialangle$32591$$, 
+         0], 
+        Hold[$CellContext`mas$$, $CellContext`mas$32592$$, 0], 
+        Hold[$CellContext`end$$, $CellContext`end$32593$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`xx$, $CellContext`yy$, $CellContext`tol$, \
+$CellContext`dof$, $CellContext`xxmax$, $CellContext`yymax$}, \
+$CellContext`tol$ = Flatten[
+           Quiet[
+            
+            NDSolve[{
+             Derivative[
+               2][$CellContext`xx$][$CellContext`t] == \
+(-($CellContext`Airresistance$$ 
+                 Derivative[
+                  1][$CellContext`xx$][$CellContext`t]))/$CellContext`mas$$, 
+              Derivative[1][$CellContext`xx$][0] == $CellContext`speed$$ 
+               Cos[$CellContext`Initialangle$$], $CellContext`xx$[0] == 0, 
+              Derivative[
+               2][$CellContext`yy$][$CellContext`t] == -9.8 - \
+($CellContext`Airresistance$$ 
+                Derivative[
+                 1][$CellContext`yy$][$CellContext`t])/$CellContext`mas$$, 
+              Derivative[1][$CellContext`yy$][0] == $CellContext`speed$$ 
+               Sin[$CellContext`Initialangle$$], $CellContext`yy$[0] == 
+              0}, {$CellContext`xx$, $CellContext`yy$}, {$CellContext`t, 0, 
+              Infinity}, 
+             Method -> {
+              "EventLocator", "Event" -> $CellContext`yy$[$CellContext`t], 
+               "EventAction" :> 
+               Throw[$CellContext`ww$$ = $CellContext`t, "StopIntegration"], 
+               "Direction" -> -1}, MaxSteps -> 
+             Infinity]]]; $CellContext`yymax$ = First[
+           Quiet[
+            FindMaximum[{
+              ReplaceAll[
+               $CellContext`yy$[$CellContext`t], $CellContext`tol$], 
+              0 <= $CellContext`t <= $CellContext`ww$$}, {$CellContext`t, \
+$CellContext`ww$$}]]]; $CellContext`xxmax$ = ReplaceAll[
+           $CellContext`xx$[$CellContext`ww$$], $CellContext`tol$]; Show[{
+           ParametricPlot[
+            ReplaceAll[{
+              $CellContext`xx$[$CellContext`t], 
+              $CellContext`yy$[$CellContext`t]}, $CellContext`tol$], \
+{$CellContext`t, 0, 
+             Min[$CellContext`ww$$, $CellContext`end$$]}, PlotRange -> 
+            Max[2.5 $CellContext`xxmax$, 1.1 $CellContext`yymax$] {{0, 1}, {0,
+               1}}, AxesLabel -> {"distance", "height"}], 
+           Graphics[{Green, 
+             PointSize[0.05], 
+             Point[
+              ReplaceAll[{
+                $CellContext`xx$[
+                 Min[$CellContext`ww$$, $CellContext`end$$]], 
+                $CellContext`yy$[
+                 
+                 Min[$CellContext`ww$$, $CellContext`end$$]]}, \
+$CellContext`tol$]]}]}]], 
+      "Specifications" :> {{{$CellContext`speed$$, 76, 
+          "\nInitial speed (m/s)"}, 5, 100, Appearance -> 
+         "Labeled"}, {{$CellContext`Airresistance$$, 0.45, "Airresistance"}, 
+         0.3, 0.9, Appearance -> 
+         "Labeled"}, {{$CellContext`Initialangle$$, 45 Degree, 
+          "\nInitial angle (degrees)"}, {
+         15 Degree, 20 Degree, 45 Degree, 65 Degree, 75 Degree, 89 Degree}, 
+         ControlType -> 
+         RadioButton}, {{$CellContext`mas$$, 0.5, "Weight (kg)"}, 0.5, 72, 
+         Appearance -> "Labeled"}, {{$CellContext`end$$, 0.001, "Shot!"}, 
+         1.*^-6, 
+         Dynamic[$CellContext`ww$$], ControlType -> 
+         Trigger}, {$CellContext`ww$$, 0, ControlType -> None}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{862., {215., 220.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.767365118065895*^9, 3.7674144791669736`*^9, 3.767414536355542*^9, 
+   3.767415412035*^9, {3.767415502168738*^9, 3.767415506621316*^9}, 
+   3.767416200105647*^9, 3.7674162414825115`*^9, 3.7674165830790224`*^9, 
+   3.767416749332736*^9, 3.7674168058876004`*^9, 3.767506556782906*^9, 
+   3.7675066207336006`*^9, {3.7675067106952305`*^9, 3.7675067140935693`*^9}, {
+   3.767506911975436*^9, 3.7675069391681333`*^9}, {3.767507076094489*^9, 
+   3.767507094619596*^9}, {3.7675071668215275`*^9, 3.767507168758918*^9}, {
+   3.7675072397473783`*^9, 3.7675072418033204`*^9}, 3.7675073126984887`*^9, {
+   3.767507550617155*^9, 3.7675075930004244`*^9}, {3.7675076243142605`*^9, 
+   3.767507631499756*^9}, {3.7675077699322853`*^9, 3.7675077844707303`*^9}, {
+   3.7675078484825144`*^9, 3.7675078525045853`*^9}, {3.767507949245802*^9, 
+   3.767507974883933*^9}, {3.7675080528527555`*^9, 3.7675080722098594`*^9}, {
+   3.767508117221759*^9, 3.767508150851128*^9}, {3.767508205715101*^9, 
+   3.7675082105044146`*^9}, {3.767508259623773*^9, 3.767508266821027*^9}, {
+   3.767508983021379*^9, 3.7675089877569027`*^9}, 3.7685359578960247`*^9, 
+   3.7685360311285515`*^9, 3.768536958538804*^9},
+ ExpressionUUID -> "8d8668fa-fd02-4be7-adcd-e8d0092d34b3"]
+}, Open  ]]
+},
+WindowSize->{1350, 631},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.1 Inherited,
+FrontEndVersion->"7.0 for Microsoft Windows (64-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 9081, 209, 613, "Input"],
+Cell[9664, 233, 7159, 135, 453, "Output"]
+}, Open  ]]
+}
+]
+*)
+
