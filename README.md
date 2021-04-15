@@ -1,2 +1,3 @@
 # Project-Modelowanie-i-symulacje
-Projekty modelowania różnych zjawisk fizycznych
+
+Designs of modeling various physical phenomena
